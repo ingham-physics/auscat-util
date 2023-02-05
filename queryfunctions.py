@@ -111,12 +111,12 @@ def get_dataframe(sqlfilename, configfile):
             "display.expand_frame_repr", False
         )  # option: expand output display of dataframe
         logging.info(
-            "Returning SPARQL Query %s results in Dataframe format...", sqlfilename
+            "Returning Query %s results in Dataframe format...", sqlfilename
         )
         return df
     except Exception as e:
         logging.error(
-            "Error while returning SPARQL Query results in Dataframe format.", e
+            "Error while returning Query results in Dataframe format.", e
         )
     finally:
         engine.dispose()
@@ -151,7 +151,7 @@ def get_dataframe_in_line(sqlCommands, configfile):
         return df
     except Exception as e:
         logging.error(
-            "Error while returning SPARQL Query results in Dataframe format", e
+            "Error while returning Query results in Dataframe format", e
         )
     finally:
         engine.dispose()
@@ -202,7 +202,7 @@ def commit_dataframe(df, tablename, configfile, target_schema):
         logging.info("Writing records stored in a DataFrame to PostgreSQL...")
     except Exception as e:
         logging.error(
-            "Error while returning SPARQL Query results in Dataframe format.", e
+            "Error while returning Query results in Dataframe format.", e
         )
     finally:
         engine.dispose()

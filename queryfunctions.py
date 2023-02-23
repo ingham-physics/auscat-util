@@ -24,10 +24,9 @@ logging.getLogger().setLevel(logging.INFO)
 
 
 class SqlScriptRunner:
-    def __init__(self, sqlfilename, configfile, csv_path):
+    def __init__(self, sqlfilename, configfile):
         self.sqlfilename = sqlfilename
         self.configfile = configfile
-        self.csv_path = csv_path
 
     def run_sql_script(self):
         """
@@ -133,7 +132,7 @@ class SqlScriptRunner:
         finally:
             engine.dispose()
 
-    def import_csv(self):
+    def import_csv(self, csv_path):
         """
         Run a sql file, import a csv file to postgres, generate a table.
         """
@@ -153,19 +152,19 @@ class SqlScriptRunner:
         with open(self.sqlfilename, "r") as fd:
             s = fd.read()
         # Import csv file
-        with open(self.csv_path) as file:
+        with open(csv_path) as file:
             cursor.copy_expert(s, file)
 
         try:
             logging.info(
                 "Importing a csv file %s to postgres, generating a table...",
-                self.csv_path,
+                csv_path,
             )
             conn.commit()
         except Exception as e:
             logging.error("Error while importing a csv file to postgres.", e)
 
-    def export_to_csv(self):
+    def export_to_csv(self, csv_path):
         """
         Run a sql file, export result table to a .csv file.
         """
@@ -184,10 +183,10 @@ class SqlScriptRunner:
         # Read sql command from sqlfile
         s = read_text_file(self.sqlfilename)
         # Convert to csv file
-        with open(self.csv_path, "w") as file:
+        with open(csv_path, "w") as file:
             cursor.copy_expert(s, file)
         try:
-            logging.info("Exporting result table to a .csv file %s...", self.csv_path)
+            logging.info("Exporting result table to a .csv file %s...", csv_path)
             conn.commit()
         except Exception as e:
             logging.error("Error while exporting result table to a .csv file.", e)

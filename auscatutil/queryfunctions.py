@@ -478,9 +478,9 @@ class SPARQLQueryRunner:
         return result
 
 
-class PentahoConnectionRemover:
+class PentahoConnection:
     """
-    A class for removing Pentaho database connections from a list of file paths.
+    A class for working with Pentaho database connections.
 
     :param pathlist: A list of file paths to search for Pentaho database connections.
     :type pathlist: List[str]
